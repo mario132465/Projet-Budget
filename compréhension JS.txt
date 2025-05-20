@@ -1,0 +1,185 @@
+🔁 Initialisation
+
+document.addEventListener("DOMContentLoaded", () => {
+→ Le navigateur exécute le code une fois la page chargée.
+
+🔍 Détection de page
+
+const isHomePage = document.body.contains(document.querySelector(".summary"));
+→ Le script vérifie si la page est la page d’accueil.
+
+
+const isDepensePage = document.title.includes("Dépense");
+→ Le script vérifie si la page est celle des dépenses.
+
+
+const isRevenuPage = document.title.includes("Revenu");
+→ Le script vérifie si la page est celle des revenus.
+
+💾 Fonctions localStorage
+
+const getData = (key) => JSON.parse(localStorage.getItem(key)) || [];
+→ La fonction récupère les données du stockage local.
+
+
+const saveData = (key, data) => localStorage.setItem(key, JSON.stringify(data));
+→ La fonction enregistre des données dans le stockage local.
+
+🏠 Si on est sur la page d'accueil
+
+if (isHomePage) {
+→ Le script exécute le bloc si on est sur la page d’accueil.
+
+
+const revenus = getData("revenus");
+→ Le script récupère les revenus depuis le stockage local.
+
+
+const depenses = getData("depenses");
+→ Le script récupère les dépenses depuis le stockage local.
+
+
+const totalRevenus = revenus.reduce((sum, item) => sum + item.montant, 0);
+→ Le script additionne tous les montants des revenus.
+
+
+const totalDepenses = depenses.reduce((sum, item) => sum + item.montant, 0);
+→ Le script additionne tous les montants des dépenses.
+
+
+const solde = totalRevenus - totalDepenses;
+→ Le script calcule la différence entre revenus et dépenses.
+
+
+const cards = document.querySelectorAll(".card p");
+→ Le script sélectionne les paragraphes dans les cartes.
+
+
+cards[0].textContent = totalRevenus.toLocaleString() + " F CFA";
+→ Le script affiche le total des revenus formaté.
+
+
+cards[1].textContent = totalDepenses.toLocaleString() + " F CFA";
+→ Le script affiche le total des dépenses formaté.
+
+
+cards[2].textContent = solde.toLocaleString() + " F CFA";
+→ Le script affiche le solde formaté.
+
+📋 Affichage des lignes
+
+const depTable = document.querySelectorAll("table tbody")[0];
+→ Le script sélectionne le tableau des dépenses.
+
+
+const revTable = document.querySelectorAll("table tbody")[1];
+→ Le script sélectionne le tableau des revenus.
+
+➕ Affichage des dépenses
+
+depenses.forEach((item, index) => {
+→ Le script parcourt chaque dépense.
+
+
+const row = `<tr>...`;
+→ Le script crée une ligne HTML pour la dépense.
+
+
+depTable.insertAdjacentHTML("beforeend", row);
+→ Le script ajoute la ligne dans le tableau des dépenses.
+
+➕ Affichage des revenus
+
+revenus.forEach((item, index) => {
+→ Le script parcourt chaque revenu.
+
+
+const row = `<tr>...`;
+→ Le script crée une ligne HTML pour le revenu.
+
+
+revTable.insertAdjacentHTML("beforeend", row);
+→ Le script ajoute la ligne dans le tableau des revenus.
+
+❌ Supprimer un élément
+
+window.supprimer = (key, index) => {
+→ Le script définit une fonction pour supprimer un élément.
+
+
+const data = getData(key);
+→ La fonction récupère les données selon la clé.
+
+
+data.splice(index, 1);
+→ La fonction retire l’élément à l’index donné.
+
+
+saveData(key, data);
+→ La fonction met à jour les données dans le stockage.
+
+
+location.reload();
+→ La fonction recharge la page.
+
+📝 Si on est sur un formulaire
+
+if (isDepensePage || isRevenuPage) {
+→ Le script vérifie si on est sur une page formulaire.
+
+
+const form = document.querySelector("form");
+→ Le script sélectionne le formulaire.
+
+
+form.addEventListener("submit", (e) => {
+→ Le script écoute l’envoi du formulaire.
+
+
+e.preventDefault();
+→ Le script empêche l’envoi automatique du formulaire.
+
+🧠 Traitement des champs
+
+const titre = form.querySelector("input[type=text]").value.trim();
+→ Le script lit et nettoie le titre saisi.
+
+
+const montantStr = form.querySelectorAll("input[type=text]")[1].value.trim();
+→ Le script lit et nettoie le montant saisi.
+
+
+const montant = parseInt(montantStr.replace(/[^\d]/g, ""), 10);
+→ Le script extrait le nombre du montant.
+
+
+if (!titre || isNaN(montant)) {
+  alert("Veuillez entrer des données valides.");
+  return;
+}
+→ Le script affiche une alerte si les champs sont invalides.
+
+✅ Sauvegarde des données
+
+const item = { titre, montant };
+→ Le script crée un objet à enregistrer.
+
+
+const key = isDepensePage ? "depenses" : "revenus";
+→ Le script choisit la bonne clé selon la page.
+
+
+const data = getData(key);
+→ Le script récupère la liste actuelle.
+
+
+data.push(item);
+→ Le script ajoute le nouvel élément.
+
+
+saveData(key, data);
+→ Le script sauvegarde la nouvelle liste.
+
+
+window.location.href = "index.html";
+→ Le script redirige vers la page d’accueil.
