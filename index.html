@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gestion du budget</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -15,16 +15,16 @@
 
   <section class="summary">
     <div class="card">
-      <h3>Budget</h3>
-      <p></p>
+      <h3>Revenus</h3>
+      <p class="revenus"></p>
     </div>
     <div class="card">
       <h3>Dépenses</h3>
-      <p></p>
+      <p class="depenses"></p>
     </div>
     <div class="card">
       <h3>Solde</h3>
-      <p></p>
+      <p class="solde"></p>
     </div>
   </section>
 
@@ -38,7 +38,7 @@
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody id="tbody-depenses"></tbody>
     </table>
     <button class="add-button" onclick="ouvrirModal('modal-depense')">+ Ajouter dépense</button>
   </section>
@@ -53,7 +53,7 @@
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody id="tbody-revenus"></tbody>
     </table>
     <button class="add-button" onclick="ouvrirModal('modal-revenu')">+ Ajouter revenu</button>
   </section>
@@ -63,10 +63,10 @@
     <div class="modal-content">
       <h2>Ajouter Dépense</h2>
       <form id="form-depense">
-        <label>Titre</label>
-        <input type="text" required />
-        <label>Montant</label>
-        <input type="text" required />
+        <label for="depense-titre">Titre</label>
+        <input type="text" id="depense-titre" required />
+        <label for="depense-montant">Montant</label>
+        <input type="text" id="depense-montant" required />
         <button type="submit" class="btn-valider">Valider</button>
         <button type="button" class="btn-annuler" onclick="fermerModal('modal-depense')">Annuler</button>
       </form>
@@ -78,17 +78,17 @@
     <div class="modal-content">
       <h2>Ajouter Revenu</h2>
       <form id="form-revenu">
-        <label>Titre</label>
-        <input type="text" required />
-        <label>Montant</label>
-        <input type="text" required />
+        <label for="revenu-titre">Titre</label>
+        <input type="text" id="revenu-titre" required />
+        <label for="revenu-montant">Montant</label>
+        <input type="text" id="revenu-montant" required />
         <button type="submit" class="btn-valider">Valider</button>
         <button type="button" class="btn-annuler" onclick="fermerModal('modal-revenu')">Annuler</button>
       </form>
     </div>
   </div>
 
-  <script src="script.js">
-  </script>
+  <script src="script.js"></script>
+
 </body>
 </html>
